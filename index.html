@@ -3,789 +3,322 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>DVA AI POWERED DASHBOARD</title>
+    <title>DVA LIVE DASHBOARD</title>
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
         }
-
-        :root {
-            --bg-primary: #f5f5f5;
-            --bg-secondary: #ffffff;
-            --text-primary: #333333;
-            --text-secondary: #666666;
-            --accent: #667eea;
-            --accent-dark: #5a67d8;
-            --success: #10b981;
-            --warning: #f59e0b;
-            --danger: #ef4444;
-            --border: #e5e7eb;
-        }
-
-        [data-theme="dark"] {
-            --bg-primary: #1a1a1a;
-            --bg-secondary: #2d2d2d;
-            --text-primary: #ffffff;
-            --text-secondary: #b3b3b3;
-            --accent: #818cf8;
-            --accent-dark: #6366f1;
-            --border: #404040;
-        }
-
-        [data-theme="ocean"] {
-            --bg-primary: #e0f2fe;
-            --bg-secondary: #ffffff;
-            --text-primary: #0c4a6e;
-            --text-secondary: #0369a1;
-            --accent: #0284c7;
-            --accent-dark: #0369a1;
-            --border: #bae6fd;
-        }
-
-        [data-theme="midnight"] {
-            --bg-primary: #0f172a;
-            --bg-secondary: #1e293b;
-            --text-primary: #f1f5f9;
-            --text-secondary: #cbd5e1;
-            --accent: #38bdf8;
-            --accent-dark: #0ea5e9;
-            --border: #334155;
-        }
-
+        
         body {
-            background: linear-gradient(135deg, var(--accent) 0%, var(--accent-dark) 100%);
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             min-height: 100vh;
             padding: 15px;
-            transition: all 0.3s ease;
         }
-
+        
         .container {
             max-width: 500px;
             margin: 0 auto;
         }
-
-        /* Header */
+        
         .header {
-            background: var(--bg-secondary);
-            border-radius: 25px;
+            background: white;
+            border-radius: 20px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-            color: var(--text-primary);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
         }
-
+        
         .header h1 {
             font-size: 24px;
+            color: #333;
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
+        
         .header h1 span {
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
+            background: #667eea;
             color: white;
             padding: 5px 12px;
             border-radius: 30px;
             font-size: 14px;
         }
-
+        
         .live-badge {
-            display: inline-block;
-            background: var(--success);
+            background: #10b981;
             color: white;
             padding: 5px 15px;
             border-radius: 30px;
             font-size: 12px;
+            display: inline-block;
             margin-top: 10px;
             animation: pulse 2s infinite;
         }
-
+        
         @keyframes pulse {
             0% { opacity: 1; }
             50% { opacity: 0.7; }
             100% { opacity: 1; }
         }
-
-        /* Stats Grid */
+        
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
             margin-bottom: 15px;
         }
-
+        
         .stat-card {
-            background: var(--bg-secondary);
-            border-radius: 20px;
+            background: white;
+            border-radius: 15px;
             padding: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            color: var(--text-primary);
-            transition: transform 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        .stat-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .stat-icon {
-            font-size: 24px;
-            margin-bottom: 10px;
-        }
-
+        
         .stat-label {
-            color: var(--text-secondary);
+            color: #666;
             font-size: 12px;
             margin-bottom: 5px;
         }
-
+        
         .stat-value {
             font-size: 24px;
             font-weight: bold;
-            color: var(--accent);
+            color: #667eea;
         }
-
-        .stat-trend {
-            font-size: 11px;
-            color: var(--success);
-            margin-top: 5px;
-        }
-
-        /* Trending Section */
-        .trending-section {
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            color: var(--text-primary);
-        }
-
-        .trending-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .trending-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            border-bottom: 1px solid var(--border);
-        }
-
-        .trending-item:last-child {
-            border-bottom: none;
-        }
-
-        .trending-label {
-            color: var(--text-secondary);
-        }
-
-        .trending-value {
-            font-weight: bold;
-            color: var(--accent);
-        }
-
-        /* AI Insights */
-        .ai-insights {
-            background: linear-gradient(135deg, var(--accent), var(--accent-dark));
-            border-radius: 20px;
-            padding: 20px;
-            margin-bottom: 15px;
-            color: white;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
-        }
-
-        .ai-title {
-            font-size: 16px;
-            font-weight: bold;
-            margin-bottom: 10px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .ai-message {
-            background: rgba(255, 255, 255, 0.2);
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 13px;
-            line-height: 1.5;
-        }
-
-        /* Admin Leaderboard */
+        
         .admin-section {
-            background: var(--bg-secondary);
-            border-radius: 20px;
+            background: white;
+            border-radius: 15px;
             padding: 20px;
             margin-bottom: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            color: var(--text-primary);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-
-        .admin-tabs {
-            display: flex;
-            gap: 10px;
-            margin-bottom: 20px;
+        
+        .section-title {
+            font-size: 16px;
+            font-weight: bold;
+            margin-bottom: 15px;
+            color: #333;
+            border-bottom: 2px solid #667eea;
+            padding-bottom: 10px;
         }
-
-        .admin-tab {
-            flex: 1;
-            padding: 10px;
-            text-align: center;
-            background: var(--bg-primary);
-            border: none;
-            border-radius: 10px;
-            color: var(--text-primary);
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 12px;
-        }
-
-        .admin-tab.active {
-            background: var(--accent);
-            color: white;
-        }
-
+        
         .admin-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            padding: 12px 0;
-            border-bottom: 1px solid var(--border);
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
         }
-
+        
         .admin-item:last-child {
             border-bottom: none;
         }
-
-        .admin-rank {
-            width: 25px;
-            height: 25px;
-            background: var(--accent);
-            color: white;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 12px;
-            font-weight: bold;
-            margin-right: 10px;
-        }
-
-        .admin-info {
-            flex: 1;
-            display: flex;
-            align-items: center;
-        }
-
+        
         .admin-name {
             font-weight: 600;
-            color: var(--text-primary);
+            color: #333;
         }
-
+        
         .admin-stats {
-            color: var(--accent);
-            font-weight: 500;
-            font-size: 13px;
+            color: #667eea;
         }
-
-        .badge {
-            background: var(--accent);
-            color: white;
+        
+        .status-badge {
             padding: 3px 8px;
             border-radius: 12px;
             font-size: 10px;
-            margin-left: 8px;
-        }
-
-        /* Command Center */
-        .command-center {
-            background: var(--bg-secondary);
-            border-radius: 20px;
-            padding: 20px;
-            margin-top: 15px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        }
-
-        .command-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 10px;
-            margin-top: 15px;
-        }
-
-        .command-btn {
-            background: var(--bg-primary);
-            border: none;
-            padding: 12px 5px;
-            border-radius: 10px;
-            font-size: 12px;
-            cursor: pointer;
-            transition: all 0.3s;
-            color: var(--text-primary);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 5px;
-        }
-
-        .command-btn:hover {
-            background: var(--accent);
+            font-weight: bold;
             color: white;
         }
-
-        .command-btn.admin {
-            background: var(--danger);
-            color: white;
-        }
-
-        .command-emoji {
-            font-size: 18px;
-        }
-
-        /* Loading */
-        .loading {
-            display: none;
-            text-align: center;
-            padding: 40px;
-        }
-
-        .spinner {
-            width: 40px;
-            height: 40px;
-            border: 4px solid var(--border);
-            border-top: 4px solid var(--accent);
-            border-radius: 50%;
-            animation: spin 1s linear infinite;
-            margin: 0 auto 15px;
-        }
-
-        @keyframes spin {
-            0% { transform: rotate(0deg); }
-            100% { transform: rotate(360deg); }
-        }
-
-        /* Footer */
+        
+        .status-completed { background: #10b981; }
+        .status-refunded { background: #f59e0b; }
+        .status-cancelled { background: #ef4444; }
+        .status-active { background: #3b82f6; }
+        
         .footer {
             text-align: center;
             color: white;
             font-size: 12px;
             margin-top: 20px;
-            opacity: 0.8;
         }
-
-        .theme-switcher {
-            display: flex;
-            gap: 10px;
-            justify-content: center;
-            margin: 15px 0;
+        
+        .timestamp {
+            color: white;
+            text-align: center;
+            margin-bottom: 10px;
+            font-size: 12px;
         }
-
-        .theme-btn {
-            width: 30px;
-            height: 30px;
-            border-radius: 50%;
-            border: 2px solid white;
-            cursor: pointer;
-        }
-
-        .theme-btn.light { background: #f5f5f5; }
-        .theme-btn.dark { background: #1a1a1a; }
-        .theme-btn.ocean { background: #e0f2fe; }
-        .theme-btn.midnight { background: #0f172a; }
     </style>
 </head>
 <body>
     <div class="container">
-        <!-- Header -->
         <div class="header">
-            <h1>
-                # DVA AI DASHBOARD
-                <span>v20.0</span>
-            </h1>
-            <div class="live-badge" id="liveIndicator">🔴 LIVE METRICS</div>
-            <div style="margin-top: 15px; color: var(--text-secondary);" id="timestamp">Loading...</div>
+            <h1>📊 DVA LIVE DASHBOARD <span>v20.0</span></h1>
+            <div class="live-badge" id="liveIndicator">🔴 LIVE</div>
+            <div style="margin-top: 10px; color: #666;" id="timestamp">Loading...</div>
+            <div style="margin-top: 5px; font-size: 12px; color: #999;" id="groupsCount"></div>
         </div>
 
-        <!-- Stats Grid -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-icon">💎</div>
-                <div class="stat-label">TOTAL VOLUME</div>
+                <div class="stat-label">💰 TOTAL VOLUME</div>
                 <div class="stat-value" id="totalVolume">$0</div>
-                <div class="stat-trend" id="volumeTrend">↑ 0%</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">🇪🇹</div>
-                <div class="stat-label">ETB VOLUME</div>
+                <div class="stat-label">🇪🇹 ETB VOLUME</div>
                 <div class="stat-value" id="etbVolume">0 ETB</div>
-                <div class="stat-trend" id="etbTrend">↑ 0%</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">💵</div>
-                <div class="stat-label">USD VOLUME</div>
+                <div class="stat-label">💵 USD VOLUME</div>
                 <div class="stat-value" id="usdVolume">$0</div>
-                <div class="stat-trend" id="usdTrend">↑ 0%</div>
             </div>
             <div class="stat-card">
-                <div class="stat-icon">📊</div>
-                <div class="stat-label">TOTAL DEALS</div>
+                <div class="stat-label">📊 TOTAL DEALS</div>
                 <div class="stat-value" id="totalDeals">0</div>
-                <div class="stat-trend" id="dealsTrend">+0 today</div>
             </div>
         </div>
 
-        <!-- Success Rate -->
-        <div class="trending-section">
-            <div class="trending-title">
-                ⭐ SUCCESS RATE
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-label">✅ COMPLETED</div>
+                <div class="stat-value" id="completedDeals">0</div>
             </div>
-            <div style="font-size: 36px; font-weight: bold; color: var(--success); text-align: center;" id="successRate">0%</div>
-            <div style="text-align: center; color: var(--text-secondary); margin-top: 10px;" id="activeCurrency">Most Active: USD</div>
-        </div>
-
-        <!-- AI Insights -->
-        <div class="ai-insights">
-            <div class="ai-title">
-                🤖 AI INSIGHTS
+            <div class="stat-card">
+                <div class="stat-label">💰 REFUNDED</div>
+                <div class="stat-value" id="refundedDeals">0</div>
             </div>
-            <div class="ai-message" id="aiInsights">
-                Analyzing market data...
+            <div class="stat-card">
+                <div class="stat-label">❌ CANCELLED</div>
+                <div class="stat-value" id="cancelledDeals">0</div>
             </div>
-        </div>
-
-        <!-- Trending Now -->
-        <div class="trending-section">
-            <div class="trending-title">
-                📈 TRENDING NOW
-            </div>
-            <div class="trending-item">
-                <span class="trending-label">Most Active Currency:</span>
-                <span class="trending-value" id="mostActiveCurrency">ETB</span>
-            </div>
-            <div class="trending-item">
-                <span class="trending-label">Busiest Admin:</span>
-                <span class="trending-value" id="busiestAdmin">@Agegenewu0102</span>
-            </div>
-            <div class="trending-item">
-                <span class="trending-label">Peak Hours:</span>
-                <span class="trending-value" id="peakHours">11 AM - 2 PM</span>
-            </div>
-            <div class="trending-item">
-                <span class="trending-label">Today's Volume:</span>
-                <span class="trending-value" id="todayVolume">$450</span>
+            <div class="stat-card">
+                <div class="stat-label">⚡ ACTIVE</div>
+                <div class="stat-value" id="activeDeals">0</div>
             </div>
         </div>
 
-        <!-- Admin Leaderboard with Tabs -->
         <div class="admin-section">
-            <div class="trending-title">
-                👑 ADMIN LEADERBOARD
-            </div>
-            
-            <div class="admin-tabs">
-                <button class="admin-tab active" onclick="switchLeaderboard('deals')">📊 By Deals</button>
-                <button class="admin-tab" onclick="switchLeaderboard('usd')">💵 By USD</button>
-                <button class="admin-tab" onclick="switchLeaderboard('etb')">🇪🇹 By ETB</button>
-            </div>
-
+            <div class="section-title">👑 ADMIN LEADERBOARD</div>
             <div id="adminList"></div>
         </div>
 
-        <!-- Refund Statistics -->
-        <div class="trending-section">
-            <div class="trending-title">
-                💰 REFUND STATISTICS
-            </div>
-            <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 0;">
-                <div>
-                    <div class="stat-label">Total Refunded</div>
-                    <div class="stat-value" style="font-size: 20px;" id="refundedDeals">0 deals</div>
-                </div>
-                <div>
-                    <div class="stat-label">Refunded ETB</div>
-                    <div class="stat-value" style="font-size: 20px;" id="refundedETB">0 ETB</div>
-                </div>
-                <div>
-                    <div class="stat-label">Refunded USD</div>
-                    <div class="stat-value" style="font-size: 20px;" id="refundedUSD">$0</div>
-                </div>
-                <div>
-                    <div class="stat-label">Refund Rate</div>
-                    <div class="stat-value" style="font-size: 20px;" id="refundRate">0%</div>
-                </div>
-            </div>
+        <div class="admin-section">
+            <div class="section-title">⭐ TOP USERS</div>
+            <div id="userList"></div>
         </div>
 
-        <!-- Active Deals -->
-        <div class="trending-section">
-            <div class="trending-title">
-                ⚡ ACTIVE DEALS
-            </div>
-            <div class="stats-grid" style="grid-template-columns: repeat(2, 1fr); margin-bottom: 0;">
-                <div>
-                    <div class="stat-label">Active Deals</div>
-                    <div class="stat-value" style="font-size: 20px;" id="activeDeals">0</div>
-                </div>
-                <div>
-                    <div class="stat-label">Active ETB</div>
-                    <div class="stat-value" style="font-size: 20px;" id="activeETB">0 ETB</div>
-                </div>
-                <div>
-                    <div class="stat-label">Active USD</div>
-                    <div class="stat-value" style="font-size: 20px;" id="activeUSD">$0</div>
-                </div>
-                <div>
-                    <div class="stat-label">Completion ETA</div>
-                    <div class="stat-value" style="font-size: 20px;" id="completionETA">24h</div>
-                </div>
-            </div>
+        <div class="admin-section">
+            <div class="section-title">🔄 RECENT DEALS</div>
+            <div id="recentDealsList"></div>
         </div>
 
-        <!-- Command Center -->
-        <div class="command-center">
-            <div class="trending-title">
-                ⚙️ COMMAND CENTER
-            </div>
-            <div class="command-grid">
-                <button class="command-btn" onclick="sendCommand('/form')">
-                    <span class="command-emoji">📝</span>
-                    <span>/form</span>
-                </button>
-                <button class="command-btn" onclick="sendCommand('/me')">
-                    <span class="command-emoji">👤</span>
-                    <span>/me</span>
-                </button>
-                <button class="command-btn" onclick="sendCommand('/top')">
-                    <span class="command-emoji">🏆</span>
-                    <span>/top</span>
-                </button>
-                <button class="command-btn admin" onclick="sendCommand('/status')">
-                    <span class="command-emoji">📊</span>
-                    <span>/status</span>
-                </button>
-                <button class="command-btn admin" onclick="sendCommand('/mee')">
-                    <span class="command-emoji">👮</span>
-                    <span>/mee</span>
-                </button>
-                <button class="command-btn admin" onclick="sendCommand('/close')">
-                    <span class="command-emoji">🔒</span>
-                    <span>/close</span>
-                </button>
-                <button class="command-btn admin" onclick="sendCommand('/refund')">
-                    <span class="command-emoji">💰</span>
-                    <span>/refund</span>
-                </button>
-                <button class="command-btn" onclick="sendCommand('/help')">
-                    <span class="command-emoji">❓</span>
-                    <span>/help</span>
-                </button>
-                <button class="command-btn" onclick="sendCommand('/ping')">
-                    <span class="command-emoji">🏓</span>
-                    <span>/ping</span>
-                </button>
-            </div>
-        </div>
-
-        <!-- Theme Switcher -->
-        <div class="theme-switcher">
-            <div class="theme-btn light" onclick="setTheme('light')" title="Light"></div>
-            <div class="theme-btn dark" onclick="setTheme('dark')" title="Dark"></div>
-            <div class="theme-btn ocean" onclick="setTheme('ocean')" title="Ocean"></div>
-            <div class="theme-btn midnight" onclick="setTheme('midnight')" title="Midnight"></div>
-        </div>
-
-        <!-- Footer -->
         <div class="footer">
-            🤖 DVA BOT v20.0 | 👨‍💻 @MR_JOKER_UP<br>
+            🤖 DVA BOT | 👨‍💻 @MR_JOKER_UP<br>
             <span id="updateTime"></span>
         </div>
     </div>
 
-    <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
-
     <script>
-        // Initialize Telegram Web App
-        const Telegram = window.Telegram.WebApp;
-        Telegram.ready();
-        Telegram.expand();
-
-        // Current leaderboard sort
-        let currentSort = 'deals';
-
-        // Demo Data - Replace with your actual API data
-        const dashboardData = {
-            totalVolume: 18420.50,
-            etbVolume: 110000,
-            usdVolume: 1470.90,
-            totalDeals: 146,
-            successRate: 92,
-            refundedDeals: 5,
-            refundedETB: 1040,
-            refundedUSD: 21,
-            activeDeals: 5,
-            activeETB: 200,
-            activeUSD: 24,
-            mostActiveCurrency: 'ETB',
-            busiestAdmin: '@Agegenewu0102',
-            peakHours: '11 AM - 2 PM',
-            todayVolume: 450,
-            volumeTrend: 12,
-            etbTrend: 8,
-            usdTrend: 15,
-            dealsTrend: 3,
-            refundRate: 3.4,
-            completionETA: '24h',
-            aiInsights: '📈 ETB trading volume up 15% this week. Peak trading hours 11 AM - 2 PM. @Agegenewu0102 is the most active admin with 63 deals completed.',
-            admins: [
-                {name: '@Agegenewu0102', deals: 63, usd: 656.50, etb: 93000, refunded: 1},
-                {name: '@Mr_JOKER_UP', deals: 40, usd: 471.30, etb: 4613, refunded: 1},
-                {name: '@Joker_Bv', deals: 34, usd: 83.04, etb: 4250, refunded: 2},
-                {name: '@Amanu279', deals: 14, usd: 57.20, etb: 11750, refunded: 0},
-                {name: '@Blackaauu', deals: 15, usd: 124.00, etb: 0, refunded: 0},
-                {name: '@Kefafi3', deals: 5, usd: 28.80, etb: 0, refunded: 0},
-                {name: '@It_is_me_Viva', deals: 14, usd: 9.90, etb: 4550, refunded: 0},
-                {name: '@Liyu_7557', deals: 6, usd: 31.16, etb: 1860, refunded: 1}
-            ]
-        };
-
-        // Update dashboard with data
-        function updateDashboard() {
-            // Update stats
-            document.getElementById('totalVolume').textContent = '$' + dashboardData.totalVolume.toFixed(2);
-            document.getElementById('etbVolume').textContent = dashboardData.etbVolume.toLocaleString() + ' ETB';
-            document.getElementById('usdVolume').textContent = '$' + dashboardData.usdVolume.toFixed(2);
-            document.getElementById('totalDeals').textContent = dashboardData.totalDeals;
-            document.getElementById('successRate').textContent = dashboardData.successRate + '%';
-            
-            // Update trends
-            document.getElementById('volumeTrend').textContent = '↑ ' + dashboardData.volumeTrend + '%';
-            document.getElementById('etbTrend').textContent = '↑ ' + dashboardData.etbTrend + '%';
-            document.getElementById('usdTrend').textContent = '↑ ' + dashboardData.usdTrend + '%';
-            document.getElementById('dealsTrend').textContent = '+' + dashboardData.dealsTrend + ' today';
-            
-            // Update trending
-            document.getElementById('mostActiveCurrency').textContent = dashboardData.mostActiveCurrency;
-            document.getElementById('busiestAdmin').textContent = dashboardData.busiestAdmin;
-            document.getElementById('peakHours').textContent = dashboardData.peakHours;
-            document.getElementById('todayVolume').textContent = '$' + dashboardData.todayVolume;
-            
-            // Update AI insights
-            document.getElementById('aiInsights').textContent = dashboardData.aiInsights;
-            
-            // Update refund stats
-            document.getElementById('refundedDeals').textContent = dashboardData.refundedDeals + ' deals';
-            document.getElementById('refundedETB').textContent = dashboardData.refundedETB.toLocaleString() + ' ETB';
-            document.getElementById('refundedUSD').textContent = '$' + dashboardData.refundedUSD;
-            document.getElementById('refundRate').textContent = dashboardData.refundRate + '%';
-            
-            // Update active deals
-            document.getElementById('activeDeals').textContent = dashboardData.activeDeals;
-            document.getElementById('activeETB').textContent = dashboardData.activeETB.toLocaleString() + ' ETB';
-            document.getElementById('activeUSD').textContent = '$' + dashboardData.activeUSD;
-            document.getElementById('completionETA').textContent = dashboardData.completionETA;
-            
-            // Update timestamp
-            const now = new Date();
-            document.getElementById('timestamp').textContent = 'Live Update: ' + now.toISOString().replace('T', ' ').substring(0, 19);
-            document.getElementById('updateTime').textContent = 'Updated: ' + now.toLocaleTimeString();
-            
-            // Update active currency
-            document.getElementById('activeCurrency').textContent = 'Most Active: ' + dashboardData.mostActiveCurrency;
-            
-            // Update admin leaderboard
-            updateAdminLeaderboard();
-        }
-
-        // Update admin leaderboard based on current sort
-        function updateAdminLeaderboard() {
-            let sortedAdmins = [...dashboardData.admins];
-            
-            if (currentSort === 'usd') {
-                sortedAdmins.sort((a, b) => b.usd - a.usd);
-            } else if (currentSort === 'etb') {
-                sortedAdmins.sort((a, b) => b.etb - a.etb);
-            } else {
-                sortedAdmins.sort((a, b) => b.deals - a.deals);
+        const API_URL = 'http://localhost:5000/api/dashboard-data';
+        
+        async function fetchData() {
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+                updateDashboard(data);
+            } catch (e) {
+                console.log('Using mock data');
+                useMockData();
             }
+        }
+        
+        function updateDashboard(data) {
+            document.getElementById('totalVolume').textContent = '$' + (data.total_volume || 0).toFixed(2);
+            document.getElementById('etbVolume').textContent = (data.total_etb || 0).toLocaleString() + ' ETB';
+            document.getElementById('usdVolume').textContent = '$' + (data.total_usd || 0).toFixed(2);
+            document.getElementById('totalDeals').textContent = data.total_deals || 0;
+            document.getElementById('completedDeals').textContent = data.total_completed || 0;
+            document.getElementById('refundedDeals').textContent = data.total_refunded || 0;
+            document.getElementById('cancelledDeals').textContent = data.total_cancelled || 0;
+            document.getElementById('activeDeals').textContent = data.total_active || 0;
+            document.getElementById('groupsCount').textContent = `📊 ${data.groups_count || 0} groups`;
             
             let adminHtml = '';
-            sortedAdmins.forEach((admin, index) => {
-                const medal = index === 0 ? '🥇' : index === 1 ? '🥈' : index === 2 ? '🥉' : '👤';
+            (data.admins_list || []).forEach(a => {
                 adminHtml += `
                     <div class="admin-item">
-                        <div style="display: flex; align-items: center;">
-                            <span class="admin-rank">${medal}</span>
-                            <div>
-                                <span class="admin-name">${admin.name}</span>
-                                ${admin.refunded > 0 ? '<span class="badge">' + admin.refunded + ' refund</span>' : ''}
-                            </div>
-                        </div>
-                        <div class="admin-stats">
-                            ${admin.deals} deals • $${admin.usd} USD • ${admin.etb} ETB
-                        </div>
+                        <span class="admin-name">${a.name}</span>
+                        <span class="admin-stats">${a.deals} deals $${a.usd} USD ${a.etb} ETB</span>
                     </div>
                 `;
             });
-            document.getElementById('adminList').innerHTML = adminHtml;
-        }
-
-        // Switch leaderboard sort
-        function switchLeaderboard(sortBy) {
-            currentSort = sortBy;
+            document.getElementById('adminList').innerHTML = adminHtml || '<div class="admin-item">No data</div>';
             
-            // Update active tab
-            document.querySelectorAll('.admin-tab').forEach(tab => {
-                tab.classList.remove('active');
+            let userHtml = '';
+            (data.top_users || []).slice(0,10).forEach(u => {
+                userHtml += `
+                    <div class="admin-item">
+                        <span class="admin-name">${u.name}</span>
+                        <span class="admin-stats">$${u.volume.toFixed(2)}</span>
+                    </div>
+                `;
             });
-            event.target.classList.add('active');
+            document.getElementById('userList').innerHTML = userHtml || '<div class="admin-item">No data</div>';
             
-            updateAdminLeaderboard();
-        }
-
-        // Send command to bot
-        function sendCommand(command) {
-            Telegram.sendData(JSON.stringify({
-                command: command,
-                timestamp: new Date().toISOString()
-            }));
+            let recentHtml = '';
+            (data.recent_deals || []).slice(0,10).forEach(d => {
+                recentHtml += `
+                    <div class="admin-item">
+                        <div>
+                            <span class="admin-name">${d.id}</span>
+                            <span class="status-badge status-${d.status}">${d.status}</span>
+                        </div>
+                        <div>${d.currency === 'USD' ? '$' : ''}${d.amount} ${d.currency !== 'USD' ? d.currency : ''}</div>
+                    </div>
+                `;
+            });
+            document.getElementById('recentDealsList').innerHTML = recentHtml || '<div class="admin-item">No data</div>';
             
-            // Show feedback
-            Telegram.showAlert(`Command ${command} sent to bot!`);
+            const now = new Date();
+            document.getElementById('timestamp').textContent = 'Updated: ' + now.toLocaleString();
+            document.getElementById('updateTime').textContent = now.toLocaleTimeString();
         }
-
-        // Set theme
-        function setTheme(theme) {
-            document.documentElement.setAttribute('data-theme', theme);
-            localStorage.setItem('dva_theme', theme);
-        }
-
-        // Load saved theme
-        const savedTheme = localStorage.getItem('dva_theme') || 'light';
-        document.documentElement.setAttribute('data-theme', savedTheme);
-
-        // Initial update
-        updateDashboard();
         
-        // Auto-refresh every 30 seconds
-        setInterval(updateDashboard, 30000);
-
-        // Add animation to live indicator
-        setInterval(() => {
-            const indicator = document.getElementById('liveIndicator');
-            indicator.style.opacity = '0.5';
-            setTimeout(() => {
-                indicator.style.opacity = '1';
-            }, 500);
-        }, 2000);
+        function useMockData() {
+            updateDashboard({
+                total_volume: 18420.50,
+                total_etb: 110000,
+                total_usd: 1470.90,
+                total_deals: 146,
+                total_completed: 135,
+                total_refunded: 8,
+                total_cancelled: 3,
+                total_active: 5,
+                groups_count: 12,
+                admins_list: [
+                    {name: '@Agegenewu0102', deals: 63, usd: 656.50, etb: 93000},
+                    {name: '@Mr_JOKER_UP', deals: 40, usd: 471.30, etb: 4613},
+                    {name: '@Joker_Bv', deals: 34, usd: 83.04, etb: 4250}
+                ],
+                top_users: [
+                    {name: '@BigTrader', volume: 3450.75},
+                    {name: '@CryptoKing', volume: 2890.50}
+                ],
+                recent_deals: [
+                    {id: 'DVA1234', status: 'completed', amount: 500, currency: 'USD'},
+                    {id: 'DVA1235', status: 'active', amount: 1000, currency: 'ETB'}
+                ]
+            });
+        }
+        
+        fetchData();
+        setInterval(fetchData, 30000);
     </script>
 </body>
 </html>
